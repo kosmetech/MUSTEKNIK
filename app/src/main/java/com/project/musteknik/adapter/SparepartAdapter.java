@@ -57,25 +57,16 @@ public class SparepartAdapter extends RecyclerView.Adapter<SparepartAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.sparepart.setText(sparepart.get(position).toString());
-        runnableValue.run(holder.count.getText().toString());
-
-        holder.count.addTextChangedListener(new TextWatcher() {
+        holder.save.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                runnableValue.run(position + "-" + charSequence.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public void onClick(View view) {
+                holder.count.setClickable(false);
+                holder.count.setFocusable(false);
+                holder.save.setClickable(false);
+                holder.save.setFocusable(false);
+                runnableValue.run(holder.count.getText().toString());
             }
         });
-
     }
 
     // total number of rows
@@ -91,11 +82,13 @@ public class SparepartAdapter extends RecyclerView.Adapter<SparepartAdapter.View
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView sparepart;
         EditText count;
+        Button save;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sparepart = itemView.findViewById(R.id.txt_sparepart);
             count = itemView.findViewById(R.id.count);
+            save = itemView.findViewById(R.id.btn_save);
 
         }
     }

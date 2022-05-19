@@ -59,7 +59,7 @@ public class CheckoutActivity extends AppCompatActivity {
     ArrayList<Integer> sparepartlist = new ArrayList<>();
     ArrayList<String> newCount = new ArrayList<>();
     SharedPreferences sharedPreferences;
-    String idshift, idutility, idanggota, idsparepart;
+    String idshift, idutility, idanggota, idsparepart, countsparepart;
     String[] selUtility, selAnggota, selSparepart;
     ArrayList<Utility> utilityArrayList;
     RecyclerView recyclerView;
@@ -397,7 +397,7 @@ public class CheckoutActivity extends AppCompatActivity {
                             @Override
                             public void run(String s) {
                                 newCount.add(s);
-                                Log.d("tesdata", new Gson().toJson(newCount));
+                                countsparepart = TextUtils.join(",", newCount);
                             }
                         });
                         recyclerView.setAdapter(sparepartAdapter);
@@ -470,7 +470,8 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
 
-        checkout.setOnClickListener(new View.OnClickListener() {
+        checkout.
+                setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (analisis.getText().toString().equals("")){
@@ -479,7 +480,7 @@ public class CheckoutActivity extends AppCompatActivity {
                     Toast.makeText(CheckoutActivity.this, "Harap isi Deskripsi Perbaikan", Toast.LENGTH_SHORT).show();
                 } else {
                     post(user_id, tiket_id, status, analisis.getText().toString(), perbaikan.getText().toString(), idanggota, grup.getText().toString(),
-                            idshift, catatan.getText().toString(), abnormality.getText().toString(), hours.getText().toString(), idsparepart, idutility);
+                            idshift, catatan.getText().toString(), abnormality.getText().toString(), hours.getText().toString(), idsparepart, idutility, countsparepart);
 
                 }
             }
@@ -491,8 +492,8 @@ public class CheckoutActivity extends AppCompatActivity {
 
 
     void post(String userid, String tiketid, String status, String analisis, String perbaikan, String anggota, String group, String shift, String catatan,
-              String abnormality, String hours, String sparepart, String utility){
-        Call<ResponseCheckout> response = apiInterface.checkout(userid, tiketid, status, analisis, perbaikan, anggota, group, shift, catatan, abnormality, hours, sparepart, utility);
+              String abnormality, String hours, String sparepart, String utility, String terpakai){
+        Call<ResponseCheckout> response = apiInterface.checkout(userid, tiketid, status, analisis, perbaikan, anggota, group, shift, catatan, abnormality, hours, sparepart, utility, terpakai);
         response.enqueue(new Callback<ResponseCheckout>() {
             @Override
             public void onResponse(Call<ResponseCheckout> call, retrofit2.Response<ResponseCheckout> response) {

@@ -63,7 +63,8 @@ public interface ApiInterface {
                                     @Field("abnormality") String abnormalty,
                                     @Field("running_hours") String hours,
                                     @Field("sparepart") String sparepart,
-                                    @Field("utility_outages") String utility);
+                                    @Field("utility_outages") String utility,
+                                    @Field("terpakai") String terpakai);
 
     @GET("api/getMasterDataMustKosme")
     Call<ResponseMasterData> getMasterData();

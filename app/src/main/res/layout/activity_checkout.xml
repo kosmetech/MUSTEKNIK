@@ -165,12 +165,23 @@
         android:drawablePadding="10dp"
         android:background="@drawable/bg_form"
         app:layout_constraintTop_toBottomOf="@id/txt_sparepart"/>
+        <TextView
+            android:id="@+id/note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Harap mengisi jumlah sparepart sesuai urutan teratas."
+            android:textStyle="italic"
+            android:gravity="center"
+            android:textColor="#FF0000"
+            android:layout_margin="5dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edt_sparepart"/>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_sparepart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edt_sparepart"
+            app:layout_constraintTop_toBottomOf="@+id/note"
             />
 
     <TextView
@@ -204,6 +215,7 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:inputType="number"
+        android:hint="Menit"
         android:maxLines="1"
         android:padding="5dp"
         android:background="@drawable/bg_form"
