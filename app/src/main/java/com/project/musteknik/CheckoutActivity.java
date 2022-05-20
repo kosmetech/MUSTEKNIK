@@ -503,6 +503,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 startActivity(i);
                 finish();
 
+
             }
 
             @Override
