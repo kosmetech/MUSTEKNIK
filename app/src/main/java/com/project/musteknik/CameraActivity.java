@@ -101,7 +101,8 @@ public class CameraActivity extends AppCompatActivity implements ZXingScannerVie
         }
      else {
         if (code.equals("2")) {
-            post(login.getDataLogin().getId(), id, "17");
+            kode = rawResult.getText();
+            post(login.getDataLogin().getId(), id, "17", kode);
         }
     }
 
@@ -135,17 +136,21 @@ public class CameraActivity extends AppCompatActivity implements ZXingScannerVie
             }
         }
     }
-    void post(String userid, String tiketid, String status){
-        Call<ResponsePostTimeline> response = apiInterface.postTimeline(userid, tiketid, status);
+    void post(String userid, String tiketid, String status, String kodemesin){
+        Call<ResponsePostTimeline> response = apiInterface.postTimeline(userid, tiketid, status, kodemesin);
         response.enqueue(new Callback<ResponsePostTimeline>() {
             @Override
             public void onResponse(Call<ResponsePostTimeline> call, retrofit2.Response<ResponsePostTimeline> response) {
                 ResponsePostTimeline data = response.body();
-                Toast.makeText(CameraActivity.this, "Success to checkin", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(CameraActivity.this, ListTicketActivity.class);
-                startActivity(i);
-                finish();
-
+                Log.d("tesdata", new Gson().toJson(data));
+                if (String.valueOf(data.getCode()).equals("404")){
+                    Toast.makeText(CameraActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(CameraActivity.this, "Success to checkin", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(CameraActivity.this, ListTicketActivity.class);
+                    startActivity(i);
+                    finish();
+                }
             }
 
             @Override

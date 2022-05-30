@@ -34,6 +34,13 @@ public class Data{
 	@SerializedName("nama_mesin")
 	private String namaMesin;
 
+	@SerializedName("kode_mesin")
+	private String kodeMesin;
+
+	public String getKodeMesin() {
+		return kodeMesin;
+	}
+
 	public String getNamaStatus(){
 		return namaStatus;
 	}

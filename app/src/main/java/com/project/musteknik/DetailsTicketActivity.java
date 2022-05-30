@@ -38,9 +38,9 @@ import retrofit2.Callback;
 
 public class DetailsTicketActivity extends AppCompatActivity {
 
-    String id, sts;
+    String id, sts, kode;
     ApiInterface apiInterface;
-    TextView nama, dept, wa, line, status, deskripsi;
+    TextView nama, dept, wa, line, status, deskripsi, kodemesin;
     ImageView back;
     RecyclerView recyclerView;
     ExtendedFloatingActionButton checkin, checkout, done, pending;
@@ -94,6 +94,7 @@ public class DetailsTicketActivity extends AppCompatActivity {
         back = findViewById(R.id.btn_back);
         line = findViewById(R.id.txt_line);
         status = findViewById(R.id.txt_status);
+        kodemesin = findViewById(R.id.txt_kode_mesin);
         deskripsi = findViewById(R.id.txt_desc);
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -146,14 +147,14 @@ public class DetailsTicketActivity extends AppCompatActivity {
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                post(login.getDataLogin().getId(), id, "20");
+                post(login.getDataLogin().getId(), id, "20", kode);
             }
         });
 
         pending.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                post(login.getDataLogin().getId(), id, "22");
+                post(login.getDataLogin().getId(), id, "22", kode);
             }
         });
 
@@ -179,6 +180,8 @@ public class DetailsTicketActivity extends AppCompatActivity {
                 line.setText(data.getData().getNamaMesin());
                 status.setText(data.getData().getNamaStatus());
                 deskripsi.setText(data.getData().getDeskripsi());
+                kodemesin.setText(data.getData().getKodeMesin());
+                kode = data.getData().getKodeMesin();
             }
 
             @Override
@@ -246,8 +249,8 @@ public class DetailsTicketActivity extends AppCompatActivity {
         });
     }
 
-    void post(String userid, String tiketid, String status){
-        Call<ResponsePostTimeline> response = apiInterface.postTimeline(userid, tiketid, status);
+    void post(String userid, String tiketid, String status, String kodemesin){
+        Call<ResponsePostTimeline> response = apiInterface.postTimeline(userid, tiketid, status, kodemesin);
         response.enqueue(new Callback<ResponsePostTimeline>() {
             @Override
             public void onResponse(Call<ResponsePostTimeline> call, retrofit2.Response<ResponsePostTimeline> response) {

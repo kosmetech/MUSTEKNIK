@@ -46,7 +46,8 @@ public interface ApiInterface {
     @POST("api/postTimeline")
     Call<ResponsePostTimeline> postTimeline(@Field("user_id") String userId,
                                             @Field("tiket_id") String kode,
-                                            @Field("updateStatus") String status);
+                                            @Field("updateStatus") String status,
+                                            @Field("kode_mesin") String kodemesin);
 
 
     @FormUrlEncoded
