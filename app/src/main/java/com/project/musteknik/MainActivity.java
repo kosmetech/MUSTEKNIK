@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity {
 //        edtemail.setText("line1@produksi.sier");
 //        edtpassword.setText("kosme1234");
 
-        edtemail.setText("zendy.r@teknik.sier");
-        edtpassword.setText("@kosme1234");
+//        edtemail.setText("zendy.r@teknik.sier");
+//        edtpassword.setText("@kosme1234");
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override

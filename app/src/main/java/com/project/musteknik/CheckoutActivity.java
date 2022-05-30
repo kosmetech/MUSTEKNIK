@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.project.musteknik.adapter.SparepartAdapter;
 import com.project.musteknik.api.Api;
 import com.project.musteknik.api.ApiInterface;
+import com.project.musteknik.model.Group;
 import com.project.musteknik.model.Login;
 import com.project.musteknik.model.Utility;
 import com.project.musteknik.model.checkout.ResponseCheckout;
@@ -48,20 +49,20 @@ import retrofit2.Callback;
 
 public class CheckoutActivity extends AppCompatActivity {
 
-    EditText idtiket, analisis, perbaikan, grup, anggota, sparepart, abnormality, hours, utility, catatan;
-    Spinner shift;
+    EditText idtiket, analisis, perbaikan, anggota, sparepart, abnormality, hours, utility, catatan;
+    Spinner shift, group;
     Button checkout;
     ImageView btnBack;
-    //String[] utilityArray = {"Water Treatment Process","Chiller","HVAC","Compressor","PDAM","IPAL","Cooling Storage"};
     boolean[] selectedUtility, selectedAnggota, selectedSparepart;
     ArrayList<Integer> langList = new ArrayList<>();
     ArrayList<Integer> anggotalist = new ArrayList<>();
     ArrayList<Integer> sparepartlist = new ArrayList<>();
     ArrayList<String> newCount = new ArrayList<>();
     SharedPreferences sharedPreferences;
-    String idshift, idutility, idanggota, idsparepart, countsparepart;
+    String idshift, idutility, idanggota, idsparepart, countsparepart, idGroup;
     String[] selUtility, selAnggota, selSparepart;
     ArrayList<Utility> utilityArrayList;
+    ArrayList<Group> groupArrayList;
     RecyclerView recyclerView;
     SparepartAdapter sparepartAdapter;
 
@@ -85,11 +86,12 @@ public class CheckoutActivity extends AppCompatActivity {
         String json = sharedPreferences.getString("Master", null);
         masterData = gson.fromJson(json, ResponseMasterData.class);
 
+
         btnBack = findViewById(R.id.btn_back);
         idtiket = findViewById(R.id.edt_id);
         analisis = findViewById(R.id.edt_analisis);
         perbaikan = findViewById(R.id.edt_perbaikan);
-        grup = findViewById(R.id.edt_group);
+        group = findViewById(R.id.edt_group);
         shift = findViewById(R.id.edt_shift);
         anggota = findViewById(R.id.edt_anggota);
         sparepart = findViewById(R.id.edt_sparepart);
@@ -118,6 +120,12 @@ public class CheckoutActivity extends AppCompatActivity {
         utilityArrayList.add(new Utility("6", "IPAL"));
         utilityArrayList.add(new Utility("7", "Cooling Storage"));
 
+        groupArrayList = new ArrayList<Group>();
+        groupArrayList.add(new Group("1", "Group A"));
+        groupArrayList.add(new Group("2", "Group B"));
+        groupArrayList.add(new Group("3", "Group C"));
+        groupArrayList.add(new Group("4", "Group D"));
+
 
         utility.setFocusable(false);
         utility.setClickable(false);
@@ -126,9 +134,6 @@ public class CheckoutActivity extends AppCompatActivity {
         idtiket.setClickable(false);
 
         idtiket.setText(tiket_id);
-//
-//        shift.setFocusable(false);
-//        shift.setClickable(false);
 
         anggota.setFocusable(false);
         anggota.setClickable(false);
@@ -447,6 +452,7 @@ public class CheckoutActivity extends AppCompatActivity {
             list.add(masterData.getData().getShift().get(i).getName());
         }
 
+
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, list);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -470,6 +476,34 @@ public class CheckoutActivity extends AppCompatActivity {
             }
         });
 
+        List<String> listgrup = new ArrayList<String>();
+        for (int i = 0; i <= groupArrayList.size() - 1; i++){
+            listgrup.add(groupArrayList.get(i).getNama());
+        }
+
+        ArrayAdapter<String> adaptergrup = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, listgrup);
+        adaptergrup.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        group.setAdapter(adaptergrup);
+
+        group.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String grupitem = (String) adapterView.getSelectedItem();
+                for (int j = 0; j <= groupArrayList.size() - 1; j++){
+                    if (groupArrayList.get(j).getNama().equals(grupitem)){
+                        idGroup = String.valueOf(groupArrayList.get(j).getId());
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         checkout.
                 setOnClickListener(new View.OnClickListener() {
             @Override
@@ -479,7 +513,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 } else if (perbaikan.getText().toString().equals("")){
                     Toast.makeText(CheckoutActivity.this, "Harap isi Deskripsi Perbaikan", Toast.LENGTH_SHORT).show();
                 } else {
-                    post(user_id, tiket_id, status, analisis.getText().toString(), perbaikan.getText().toString(), idanggota, grup.getText().toString(),
+                    post(user_id, tiket_id, status, analisis.getText().toString(), perbaikan.getText().toString(), idanggota, idGroup,
                             idshift, catatan.getText().toString(), abnormality.getText().toString(), hours.getText().toString(), idsparepart, idutility, countsparepart);
 
                 }

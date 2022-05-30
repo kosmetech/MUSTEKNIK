@@ -142,9 +142,9 @@ public class CameraActivity extends AppCompatActivity implements ZXingScannerVie
             @Override
             public void onResponse(Call<ResponsePostTimeline> call, retrofit2.Response<ResponsePostTimeline> response) {
                 ResponsePostTimeline data = response.body();
-                Log.d("tesdata", new Gson().toJson(data));
                 if (String.valueOf(data.getCode()).equals("404")){
                     Toast.makeText(CameraActivity.this, data.getMessage(), Toast.LENGTH_SHORT).show();
+                    initView();
                 } else {
                     Toast.makeText(CameraActivity.this, "Success to checkin", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(CameraActivity.this, ListTicketActivity.class);
