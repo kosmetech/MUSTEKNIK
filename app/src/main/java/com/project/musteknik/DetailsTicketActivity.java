@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -38,7 +39,8 @@ import retrofit2.Callback;
 
 public class DetailsTicketActivity extends AppCompatActivity {
 
-    String id, sts, kode;
+    String id, kode;
+    String sts = "18";
     ApiInterface apiInterface;
     TextView nama, dept, wa, line, status, deskripsi, kodemesin;
     ImageView back;
@@ -62,7 +64,6 @@ public class DetailsTicketActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_detail_ticket);
         apiInterface = Api.getClient().create(ApiInterface.class);
-
 
 
         sharedPreferences = getSharedPreferences("shared preferences", MODE_PRIVATE);

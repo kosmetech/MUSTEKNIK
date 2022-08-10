@@ -1,6 +1,7 @@
 package com.project.musteknik;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -508,6 +509,7 @@ public class CheckoutActivity extends AppCompatActivity {
                 setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if (analisis.getText().toString().equals("")){
                     Toast.makeText(CheckoutActivity.this, "Harap isi Deskripsi Analisis", Toast.LENGTH_SHORT).show();
                 } else if (perbaikan.getText().toString().equals("")){

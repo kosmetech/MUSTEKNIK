@@ -1,6 +1,7 @@
 package com.project.musteknik;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         apiInterface = Api.getClient().create(ApiInterface.class);
 
-//        edtemail.setText("line1@produksi.sier");
+//        edtemail.setText("orin.m@produksi.sier");
 //        edtpassword.setText("kosme1234");
 
 //        edtemail.setText("zendy.r@teknik.sier");
